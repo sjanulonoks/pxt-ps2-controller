@@ -126,12 +126,12 @@
         }
         return 0;
     }
-  
-      //% block="ps2 to spi mapping: mosi$ps2cmd_spimosi miso%ps2data_spimiso sck%ps2clock_spisck cs%ps2att_spiss"
-    //% ps2cmd_spimosi.defl=DigitalPin.P15
-    //% ps2data_spimiso.defl=DigitalPin.P14
-    //% ps2clock_spisck.defl=DigitalPin.P13
-    //% ps2att_spiss.defl=DigitalPin.P12
+
+     //% block="ps2 to spi mapping: mosi$ps2cmd_spimosi miso%ps2data_spimiso sck%ps2clock_spisck cs%ps2att_spiss"
+     //% ps2cmd_spimosi.defl=DigitalPin.P15
+     //% ps2data_spimiso.defl=DigitalPin.P14
+     //% ps2clock_spisck.defl=DigitalPin.P13
+     //% ps2att_spiss.defl=DigitalPin.P12
 
     export function SPI_init(ps2att_spiss:DigitalPin,ps2cmd_spimosi:DigitalPin,ps2data_spimiso:DigitalPin,ps2clock_spisck:DigitalPin) {
         //ps2controller.SPI_init(DigitalPin.P12,DigitalPin.P8, DigitalPin.P14, DigitalPin.P13)
