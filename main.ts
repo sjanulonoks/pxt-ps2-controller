@@ -7,7 +7,6 @@
     //% ps2att_spiss.defl=DigitalPin.P12
 
     export function SPI_init(ps2att_spiss: DigitalPin, ps2cmd_spimosi: DigitalPin, ps2data_spimiso:DigitalPin, ps2clock_spisck: DigitalPin) {
-        //ps2controller.SPI_init(DigitalPin.P12,DigitalPin.P15, DigitalPin.P14, DigitalPin.P13)
             // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
             // https://makecode.microbit.org/reference/pins/spi-pins
             // https://forum.makecode.com/t/ps2-controller-extension/1409
