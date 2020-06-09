@@ -1,11 +1,23 @@
  namespace ps2controller {
 
-    let chipSelect = DigitalPin.P12
-    pins.digitalWritePin(chipSelect, 1)
+    //% block="ps2 to spi mapping: ps2-cmd_spi-mosi%mosi ps2-data_spi-miso%miso ps2-clock_spi-sck%sck ps2-att_spi-ss$cs"
+    //% ps2-cmd_spi-mosi.defl=DigitalPin.P15
+    //% ps2-data_spi-miso.defl=DigitalPin.P14
+    //% ps2-clock_spi-sck.defl=DigitalPin.P13
+    //% ps2-att_spi-ss.defl=DigitalPin.P12
 
-    pins.spiPins(DigitalPin.P15, DigitalPin.P14, DigitalPin.P13)
-    pins.spiFormat(8, 3)
-    pins.spiFrequency(250000)
+    export function SPI_init(ps2-att_spi-ss:DigitalPin,ps2-cmd_spi-mosi:DigitalPin,ps2-data_spi-miso:DigitalPin,ps2-clock_spi-sck:DigitalPin) {
+        // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
+        // https://makecode.microbit.org/reference/pins/spi-pins
+        // https://forum.makecode.com/t/ps2-controller-extension/1409
+        // http://www.techmonkeybusiness.com/using-a-playstation-2-controller-with-your-arduino-project.html
+
+        chipSelect = ps2-att_spi-ss;
+        pins.digitalWritePin(chipSelect, 1)
+        pins.spiPins(ps2-cmd_spi-mosi, ps2-data_spi-miso, ps2-clock_spi-sck);
+        pins.spiFormat(8, 3);
+        pins.spiFrequency(250000);
+       }
 
     let pad = pins.createBuffer(6)
     let connected = false
@@ -42,23 +54,39 @@
 
         return receive
      }
-
+  
     export enum PS2Button {
+        //% block="Left"
         Left,
+        //% block="Down"
         Down,
+        //% block="Right"
         Right,
+        //% block="Up"
         Up,
+        //% block="Start"
         Start,
+        //% block="Analog_Left"
         Analog_Left,
+        //% block="Analog_Right"
         Analog_Right,
+        //% block="Select"
         Select,
+        //% block="Square"
         Square,
+        //% block="Cross"
         Cross,
+        //% block="Circle"
         Circle,
+        //% block="Triangle"
         Triangle,
+        //% block="R1"
         R1,
+        //% block="L1"
         L1,
+        //% block="R2"
         R2,
+        //% block="L2"
         L2,
         Buttons,
         RX,
@@ -67,6 +95,7 @@
         LY,
      };
 
+     //% block="button $b is pressed"
      export function button_pressed(b: PS2Button): number {
         if(!connected) return 0x00
 
@@ -116,8 +145,8 @@
         }
         return 0;
     }
-
-    function poll(): boolean {
+    //% block="Get remote control information"
+    export function poll(): boolean {
         let buf = send_command(poll_cmd)
         if (buf[2] != 0x5a) {
             return false;
@@ -131,8 +160,10 @@
 
         return true
     }
-
+    
+  /*
     basic.forever(function () {
         poll();
     })
+    */
  }
