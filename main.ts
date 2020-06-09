@@ -1,5 +1,25 @@
  namespace ps2controller {
 
+    //% block="ps2 to spi mapping: mosi%ps2cmd_spimosi miso%ps2data_spimiso sck%ps2clock_spisck cs%ps2att_spiss"
+    //% ps2cmd_spimosi.defl=DigitalPin.P15
+    //% ps2data_spimiso.defl=DigitalPin.P14
+    //% ps2clock_spisck.defl=DigitalPin.P13
+    //% ps2att_spiss.defl=DigitalPin.P12
+
+    export function SPI_init(ps2att_spiss: DigitalPin, ps2cmd_spimosi: DigitalPin, ps2data_spimiso:DigitalPin, ps2clock_spisck: DigitalPin) {
+        //ps2controller.SPI_init(DigitalPin.P12,DigitalPin.P15, DigitalPin.P14, DigitalPin.P13)
+            // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
+            // https://makecode.microbit.org/reference/pins/spi-pins
+            // https://forum.makecode.com/t/ps2-controller-extension/1409
+            // http://www.techmonkeybusiness.com/using-a-playstation-2-controller-with-your-arduino-project.html
+
+            chipSelect = ps2att_spiss;
+            pins.digitalWritePin(chipSelect, 1)
+            pins.spiPins(ps2cmd_spimosi, ps2data_spimiso, ps2clock_spisck);
+            pins.spiFormat(8, 3);
+            pins.spiFrequency(250000);
+       }
+
     let pad = pins.createBuffer(6)
     let connected = false
 
@@ -127,26 +147,6 @@
         return 0;
     }
 
-     //% block="ps2 to spi mapping: mosi$ps2cmd_spimosi miso%ps2data_spimiso sck%ps2clock_spisck cs%ps2att_spiss"
-     //% ps2cmd_spimosi.defl=DigitalPin.P15
-     //% ps2data_spimiso.defl=DigitalPin.P14
-     //% ps2clock_spisck.defl=DigitalPin.P13
-     //% ps2att_spiss.defl=DigitalPin.P12
-
-    export function SPI_init(ps2att_spiss:DigitalPin,ps2cmd_spimosi:DigitalPin,ps2data_spimiso:DigitalPin,ps2clock_spisck:DigitalPin) {
-        //ps2controller.SPI_init(DigitalPin.P12,DigitalPin.P8, DigitalPin.P14, DigitalPin.P13)
-            // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
-            // https://makecode.microbit.org/reference/pins/spi-pins
-            // https://forum.makecode.com/t/ps2-controller-extension/1409
-            // http://www.techmonkeybusiness.com/using-a-playstation-2-controller-with-your-arduino-project.html
-
-            chipSelect = ps2att_spiss;
-            pins.digitalWritePin(chipSelect, 1)
-            pins.spiPins(ps2cmd_spimosi, ps2data_spimiso, ps2clock_spisck);
-            pins.spiFormat(8, 3);
-            pins.spiFrequency(250000);
-       }
-  
     function poll(): boolean {
         let buf = send_command(poll_cmd)
         if (buf[2] != 0x5a) {
