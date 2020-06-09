@@ -1,6 +1,6 @@
  namespace ps2controller {
 
-    //% block="ps2 to spi mapping: ps2-cmd_spi-mosi%mosi ps2-data_spi-miso%miso ps2-clock_spi-sck%sck ps2-att_spi-ss$cs"
+    //% block="ps2 to spi mapping: mosi%ps2-cmd_spi-mosi miso%ps2-data_spi-miso sck%ps2-clock_spi-sck cs%ps2-att_spi-ss"
     //% ps2-cmd_spi-mosi.defl=DigitalPin.P15
     //% ps2-data_spi-miso.defl=DigitalPin.P14
     //% ps2-clock_spi-sck.defl=DigitalPin.P13
@@ -146,8 +146,8 @@
         }
         return 0;
     }
-    //% block="Get remote control information"
-    export function poll(): boolean {
+
+    function poll(): boolean {
         let buf = send_command(poll_cmd)
         if (buf[2] != 0x5a) {
             return false;
@@ -162,8 +162,9 @@
         return true
     }
 
+
     basic.forever(function () {
         poll();
     })
-  
+
  }
