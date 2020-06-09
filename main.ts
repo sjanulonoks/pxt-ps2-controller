@@ -7,16 +7,16 @@
     //% ps2-att_spi-ss.defl=DigitalPin.P12
 
     export function SPI_init(ps2-cmd_spi-mosi: DigitalPin, ps2-data_spi-miso:DigitalPin, ps2-clock_spi-sck: DigitalPin, ps2-att_spi-ss: DigitalPin) {
-        // https://forum.makecode.com/t/ps2-controller-extension/1409
-        // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
-        // https://makecode.microbit.org/reference/pins/spi-pins
-        // http://www.techmonkeybusiness.com/using-a-playstation-2-controller-with-your-arduino-project.html
+            // https://forum.makecode.com/t/ps2-controller-extension/1409
+            // http://blog.nearfuturelaboratory.com/2008/06/19/playstation2-logic-analysis/
+            // https://makecode.microbit.org/reference/pins/spi-pins
+            // http://www.techmonkeybusiness.com/using-a-playstation-2-controller-with-your-arduino-project.html
 
-        chipSelect = ps2-att_spi-ss;
-        pins.digitalWritePin(chipSelect, 1)
-        pins.spiPins(ps2-cmd_spi-mosi, ps2-data_spi-miso, ps2-clock_spi-sck);
-        pins.spiFormat(8, 3);
-        pins.spiFrequency(250000);
+            chipSelect = ps2-att_spi-ss;
+            pins.digitalWritePin(chipSelect, 1)
+            pins.spiPins(ps2-cmd_spi-mosi, ps2-data_spi-miso, ps2-clock_spi-sck);
+            pins.spiFormat(8, 3);
+            pins.spiFrequency(250000);
        }
 
     let pad = pins.createBuffer(6)
